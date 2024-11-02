@@ -1,0 +1,775 @@
+{
+    "swagger": "2.0",
+    "info": {
+      "version": "1.0.0",
+      "title": "Application API",
+      "description": "Application API",
+      "license": {
+        "name": "MIT",
+        "url": "https://opensource.org/licenses/MIT"
+      }
+    },
+    "host": "localhost:4000",
+    "basePath": "/",
+    "tags": [
+      {
+        "name": "Auth",
+        "description": "Auth system"
+      },
+      {
+        "name": "Users",
+        "description": "API for users in the system"
+      },
+      {
+        "name": "Categories",
+        "description": "Category APIs"
+      },
+      {
+        "name": "Medias",
+        "description": "Media APIs"
+      },
+      {
+        "name": "Cart",
+        "description": "Cart APIs"
+      }
+    ],
+    "schemes": [
+      "http"
+    ],
+    "consumes": [
+      "application/json"
+    ],
+    "produces": [
+      "application/json"
+    ],
+    "paths": {
+      "/auth/login": {
+        "post": {
+          "tags": [
+            "Auth"
+          ],
+          "description": "login user in system",
+          "consumes": [
+            "application/x-www-form-urlencoded"
+          ],
+          "parameters": [
+            {
+              "name": "email",
+              "in": "formData",
+              "required": true,
+              "type": "string"
+            },
+            {
+              "name": "password",
+              "in": "formData",
+              "required": true,
+              "type": "string"
+            }
+          ],
+          "produces": [
+            "application/json"
+          ],
+          "responses": {
+            "200": {
+              "description": "New user is created",
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "status": {
+                    "type": "string"
+                  },
+                  "token": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "/auth/signup": {
+        "post": {
+          "tags": [
+            "Auth"
+          ],
+          "description": "register user in system",
+          "parameters": [
+            {
+              "name": "user",
+              "in": "body",
+              "description": "User that we want to create",
+              "schema": {
+                "$ref": "#/definitions/User"
+              }
+            }
+          ],
+          "produces": [
+            "application/json"
+          ],
+          "responses": {
+            "201": {
+              "description": "User sign up",
+              "schema": {
+                "$ref": "#/definitions/SignupResponse"
+              }
+            },
+            "422": {
+              "description": "Unprocessable Entities"
+            }
+          }
+        }
+      },
+      "/forget-password": {
+        "post": {
+          "tags": [
+            "Auth"
+          ],
+          "description": "register user in system",
+          "parameters": [
+            {
+              "name": "user",
+              "in": "body",
+              "description": "User that we want to create",
+              "schema": {
+                "$ref": "#/definitions/User"
+              }
+            }
+          ],
+          "produces": [
+            "application/json"
+          ],
+          "responses": {
+            "200": {
+              "description": "New user is created",
+              "schema": {
+                "$ref": "#/definitions/User"
+              }
+            }
+          }
+        }
+      },
+      "/reset-password": {
+        "post": {
+          "tags": [
+            "Auth"
+          ],
+          "description": "register user in system",
+          "parameters": [
+            {
+              "name": "user",
+              "in": "body",
+              "description": "User that we want to create",
+              "schema": {
+                "$ref": "#/definitions/User"
+              }
+            }
+          ],
+          "produces": [
+            "application/json"
+          ],
+          "responses": {
+            "200": {
+              "description": "New user is created",
+              "schema": {
+                "$ref": "#/definitions/User"
+              }
+            }
+          }
+        }
+      },
+      "/users": {
+        "get": {
+          "tags": [
+            "Users"
+          ],
+          "summary": "Get all users in system",
+          "responses": {
+            "200": {}
+          },
+          "security": [
+            {
+              "Bearer": []
+            }
+          ]
+        },
+        "post": {
+          "tags": [
+            "Users"
+          ],
+          "description": "Create new user in system",
+          "parameters": [
+            {
+              "name": "user",
+              "in": "body",
+              "description": "User that we want to create",
+              "schema": {
+                "$ref": "#/definitions/User"
+              }
+            }
+          ],
+          "produces": [
+            "application/json"
+          ],
+          "responses": {
+            "200": {}
+          },
+          "security": [
+            {
+              "Bearer": []
+            }
+          ]
+        }
+      },
+      "/users/{id}": {
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "ID of user that we want to find",
+            "type": "string"
+          }
+        ],
+        "get": {
+          "tags": [
+            "Users"
+          ],
+          "summary": "Get user with given ID",
+          "responses": {
+            "200": {
+              "description": "User is found",
+              "schema": {
+                "$ref": "#/definitions/User"
+              }
+            }
+          },
+          "security": [
+            {
+              "Bearer": []
+            }
+          ]
+        },
+        "delete": {
+          "summary": "Delete user with given ID",
+          "tags": [
+            "Users"
+          ],
+          "responses": {
+            "200": {}
+          },
+          "security": [
+            {
+              "Bearer": []
+            }
+          ]
+        },
+        "put": {
+          "summary": "Update user with give ID",
+          "tags": [
+            "Users"
+          ],
+          "parameters": [
+            {
+              "name": "user",
+              "in": "body",
+              "description": "User with new values of properties",
+              "schema": {
+                "$ref": "#/definitions/User"
+              }
+            }
+          ],
+          "responses": {
+            "200": {}
+          },
+          "security": [
+            {
+              "Bearer": []
+            }
+          ]
+        }
+      },
+      "/categories": {
+        "get": {
+          "tags": [
+            "Categories"
+          ],
+          "summary": "Get all categories in system",
+          "responses": {
+            "200": {}
+          },
+          "security": [
+            {
+              "Bearer": []
+            }
+          ]
+        },
+        "post": {
+          "tags": [
+            "Categories"
+          ],
+          "description": "Create categories",
+          "parameters": [
+            {
+              "name": "category",
+              "in": "body",
+              "description": "Create categories",
+              "schema": {
+                "$ref": "#/definitions/Category"
+              }
+            }
+          ],
+          "produces": [
+            "application/json"
+          ],
+          "responses": {
+            "200": {}
+          },
+          "security": [
+            {
+              "Bearer": []
+            }
+          ]
+        }
+      },
+      "/categories/search": {
+        "get": {
+          "tags": [
+            "Categories"
+          ],
+          "summary": "Search categories",
+          "parameters": [
+            {
+              "name": "name",
+              "in": "query",
+              "description": "Search categories",
+              "schema": {
+                "$ref": "#/definitions/Category"
+              }
+            }
+          ],
+          "responses": {
+            "200": {}
+          }
+        }
+      },
+      "/categories/{id}": {
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "ID of category",
+            "type": "string"
+          }
+        ],
+        "get": {
+          "tags": [
+            "Categories"
+          ],
+          "summary": "Get category by ID",
+          "responses": {
+            "200": {
+              "description": "Category found",
+              "schema": {
+                "$ref": "#/definitions/Category"
+              }
+            }
+          },
+          "security": [
+            {
+              "Bearer": []
+            }
+          ]
+        },
+        "delete": {
+          "summary": "Delete category with given ID",
+          "tags": [
+            "Categories"
+          ],
+          "responses": {
+            "200": {}
+          },
+          "security": [
+            {
+              "Bearer": []
+            }
+          ]
+        },
+        "put": {
+          "summary": "Update category with give ID",
+          "tags": [
+            "Categories"
+          ],
+          "parameters": [
+            {
+              "name": "user",
+              "in": "body",
+              "description": "Category update",
+              "schema": {
+                "$ref": "#/definitions/Category"
+              }
+            }
+          ],
+          "responses": {
+            "200": {}
+          },
+          "security": [
+            {
+              "Bearer": []
+            }
+          ]
+        }
+      },
+      "/medias": {
+        "get": {
+          "tags": [
+            "Medias"
+          ],
+          "summary": "Get all medias in system",
+          "responses": {
+            "200": {}
+          }
+        },
+        "post": {
+          "tags": [
+            "Medias"
+          ],
+          "description": "Create medias",
+          "parameters": [
+            {
+              "name": "title",
+              "in": "formData"
+            },
+            {
+              "name": "categories",
+              "in": "formData"
+            },
+            {
+              "name": "image",
+              "in": "formData",
+              "type": "file"
+            }
+          ],
+          "consumes": [
+            "multipart/form-data"
+          ],
+          "produces": [
+            "application/json"
+          ],
+          "responses": {
+            "200": {}
+          },
+          "security": [
+            {
+              "Bearer": []
+            }
+          ]
+        }
+      },
+      "/medias/search": {
+        "get": {
+          "tags": [
+            "Medias"
+          ],
+          "summary": "Search medias",
+          "parameters": [
+            {
+              "name": "name",
+              "in": "query",
+              "description": "Search medias",
+              "schema": {
+                "$ref": "#/definitions/Media"
+              }
+            }
+          ],
+          "responses": {
+            "200": {}
+          }
+        }
+      },
+      "/medias/{id}": {
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "ID of category",
+            "type": "string"
+          }
+        ],
+        "get": {
+          "tags": [
+            "Medias"
+          ],
+          "summary": "Get category by ID",
+          "responses": {
+            "200": {
+              "description": "Category found",
+              "schema": {
+                "$ref": "#/definitions/Media"
+              }
+            }
+          },
+          "security": [
+            {
+              "Bearer": []
+            }
+          ]
+        },
+        "delete": {
+          "summary": "Delete category with given ID",
+          "tags": [
+            "Medias"
+          ],
+          "responses": {
+            "200": {}
+          },
+          "security": [
+            {
+              "Bearer": []
+            }
+          ]
+        },
+        "put": {
+          "summary": "Update category with give ID",
+          "tags": [
+            "Medias"
+          ],
+          "parameters": [
+            {
+              "name": "user",
+              "in": "body",
+              "description": "Category update",
+              "schema": {
+                "$ref": "#/definitions/Media"
+              }
+            }
+          ],
+          "responses": {
+            "200": {}
+          },
+          "security": [
+            {
+              "Bearer": []
+            }
+          ]
+        }
+      },
+      "/cart/add": {
+        "post": {
+          "summary": "Update category with give ID",
+          "tags": [
+            "Cart"
+          ],
+          "parameters": [
+            {
+              "name": "user",
+              "in": "body",
+              "description": "Category update",
+              "schema": {
+                "$ref": "#/definitions/Media"
+              }
+            }
+          ],
+          "responses": {
+            "200": {}
+          },
+          "security": [
+            {
+              "Bearer": []
+            }
+          ]
+        }
+      },
+      "/cart/remove": {
+        "get": {
+          "tags": [
+            "Cart"
+          ],
+          "summary": "Search medias",
+          "parameters": [
+            {
+              "name": "name",
+              "in": "query",
+              "description": "Search medias",
+              "schema": {
+                "$ref": "#/definitions/Media"
+              }
+            }
+          ],
+          "responses": {
+            "200": {}
+          }
+        }
+      },
+      "/cart/{id}": {
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "ID of category",
+            "type": "string"
+          }
+        ],
+        "get": {
+          "tags": [
+            "Cart"
+          ],
+          "summary": "Get category by ID",
+          "responses": {
+            "200": {
+              "description": "Category found",
+              "schema": {
+                "$ref": "#/definitions/Media"
+              }
+            }
+          },
+          "security": [
+            {
+              "Bearer": []
+            }
+          ]
+        },
+        "delete": {
+          "summary": "Delete category with given ID",
+          "tags": [
+            "Cart"
+          ],
+          "responses": {
+            "200": {}
+          },
+          "security": [
+            {
+              "Bearer": []
+            }
+          ]
+        },
+        "put": {
+          "summary": "Update category with give ID",
+          "tags": [
+            "Cart"
+          ],
+          "parameters": [
+            {
+              "name": "user",
+              "in": "body",
+              "description": "Category update",
+              "schema": {
+                "$ref": "#/definitions/Media"
+              }
+            }
+          ],
+          "responses": {
+            "200": {}
+          },
+          "security": [
+            {
+              "Bearer": []
+            }
+          ]
+        }
+      }
+    },
+    "securityDefinitions": {
+      "Bearer": {
+        "type": "apiKey",
+        "name": "Authorization",
+        "description": "Value: Bearer {jwt}",
+        "in": "header"
+      }
+    },
+    "definitions": {
+      "SignupResponse": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "string"
+          },
+          "token": {
+            "type": "string"
+          },
+          "user": {
+            "type": "object",
+            "$ref": "#/definitions/User"
+          }
+        }
+      },
+      "User": {
+        "required": [
+          "name",
+          "lastname",
+          "email",
+          "password",
+          "passwordConfirm"
+        ],
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "lastname": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string",
+            "uniqueItems": true
+          },
+          "password": {
+            "type": "string"
+          },
+          "passwordConfirm": {
+            "type": "string"
+          }
+        }
+      },
+      "Category": {
+        "required": [
+          "name",
+          "description"
+        ],
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          }
+        }
+      },
+      "Media": {
+        "required": [
+          "title",
+          "image",
+          "width",
+          "height",
+          "user",
+          "categories"
+        ],
+        "properties": {
+          "title": {
+            "type": "string"
+          },
+          "image": {
+            "type": "string"
+          },
+          "width": {
+            "type": "string"
+          },
+          "height": {
+            "type": "string"
+          },
+          "user": {
+            "type": "string"
+          },
+          "categories": {
+            "type": "string"
+          }
+        }
+      },
+      "Users": {
+        "type": "array",
+        "$ref": "#/definitions/User"
+      }
+    }
+  }
+  
